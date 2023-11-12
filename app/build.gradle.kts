@@ -19,6 +19,11 @@ val apikeyPropertiesFile = rootProject.file("apikey.properties")
 val apikeyProperties = Properties()
 apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
 
+
+fun apiKey(): String {
+    return "722180da59ab66d43ae332fb92be98bd"
+}
+
 android {
     namespace = "com.example.thebigscreen"
     compileSdk = 34
@@ -36,7 +41,8 @@ android {
         }
 
 
-        buildConfigField("String", "YOUR_API_KEY", apikeyProperties["YOUR_API_KEY"].toString())
+//        buildConfigField("String", "YOUR_API_KEY", apikeyProperties["YOUR_API_KEY"].toString())
+        buildConfigField("String", "TMDB_API_KEY", apiKey())
     }
 
     buildTypes {
