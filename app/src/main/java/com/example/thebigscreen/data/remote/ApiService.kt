@@ -31,6 +31,13 @@ interface ApiService {
         @Query("language") language: String = "end",
     ): FilmResponse
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("page") page: Int = 0,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = "en"
+    ): FilmResponse
+
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("page") page: Int = 0,
