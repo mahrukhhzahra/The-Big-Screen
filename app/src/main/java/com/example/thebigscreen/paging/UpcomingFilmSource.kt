@@ -8,7 +8,7 @@ import com.example.thebigscreen.util.FilmType
 import retrofit2.HttpException
 import java.io.IOException
 
-class UpcomingFilmSource(private val api: ApiService, private val filmType: FilmType) :
+class UpcomingFilmSource(private val api: ApiService) :
     PagingSource<Int, Film>() {
     override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
         return state.anchorPosition
