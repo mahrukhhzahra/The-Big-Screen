@@ -19,7 +19,7 @@ class WatchListRepository @Inject constructor(private val database: WatchListDat
         database.movieDao.removeFromWatchList(mediaId = mediaId)
     }
 
-    suspend fun getFullWatchList(): Flow<List<MyListMovie>> {
+    fun getFullWatchList(): Flow<List<MyListMovie>> {
         return database.movieDao.getFullWatchList()
     }
 

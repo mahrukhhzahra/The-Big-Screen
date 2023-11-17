@@ -15,14 +15,7 @@ plugins {
 
 }
 
-val apikeyPropertiesFile = rootProject.file("apikey.properties")
-val apikeyProperties = Properties()
-apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
 
-
-fun apiKey(): String {
-    return "722180da59ab66d43ae332fb92be98bd"
-}
 
 android {
     namespace = "com.example.thebigscreen"
@@ -42,7 +35,7 @@ android {
 
 
 //        buildConfigField("String", "YOUR_API_KEY", apikeyProperties["YOUR_API_KEY"].toString())
-        buildConfigField("String", "TMDB_API_KEY", apiKey())
+//        buildConfigField("String", "TMDB_API_KEY", apiKey())
     }
 
     buildTypes {
@@ -168,7 +161,9 @@ dependencies {
     // RatingBar
 //    implementation("com.github.a914-gowtham:compose-ratingbar:1.2.3")
 //    implementation("com.github.SmartToolFactory:Compose-RatingBar:Tag")
-    implementation("com.github.a914-gowtham:compose-ratingbar:1.3.4")
+
+//    implementation("com.github.a914-gowtham:compose-ratingbar:1.3.4")
+    implementation("com.github.a914-gowtham:compose-ratingbar:1.2.3")
 
     // Timber
     val timberVersion = "5.0.1"
