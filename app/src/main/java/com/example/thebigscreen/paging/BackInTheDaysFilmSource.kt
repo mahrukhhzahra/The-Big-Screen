@@ -18,9 +18,9 @@ class BackInTheDaysFilmSource(private val api: ApiService, private val filmType:
         return try {
             val nextPage = params.key ?: 1
             val backInTheDaysMovies =
-                if (filmType == FilmType.MOVIE) api.getBackInTheDaysMovies(page = nextPage) else api.getBackInTheDaysTvShows(
-                    page = nextPage
-                )
+                if (filmType == FilmType.MOVIE) api.getBackInTheDaysMovies(page = nextPage)
+                else api.getBackInTheDaysTvShows(page = nextPage)
+
             LoadResult.Page(
                 data = backInTheDaysMovies.results,
                 prevKey = if (nextPage == 1) null else nextPage - 1,

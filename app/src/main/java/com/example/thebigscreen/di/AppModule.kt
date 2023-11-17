@@ -5,6 +5,11 @@ import androidx.room.Room
 import com.example.thebigscreen.data.local.WatchListDatabase
 import com.example.thebigscreen.data.preferences.UserPreferences
 import com.example.thebigscreen.data.remote.ApiService
+import com.example.thebigscreen.data.repository.FilmRepository
+import com.example.thebigscreen.data.repository.GenreRepository
+import com.example.thebigscreen.data.repository.ReviewsRepository
+import com.example.thebigscreen.data.repository.SearchRepository
+import com.example.thebigscreen.data.repository.WatchListRepository
 import com.example.thebigscreen.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides

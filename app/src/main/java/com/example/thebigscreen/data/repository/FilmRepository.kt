@@ -8,6 +8,7 @@ import com.example.thebigscreen.data.remote.response.CastResponse
 import com.example.thebigscreen.data.remote.response.WatchProviderResponse
 import com.example.thebigscreen.model.Film
 import com.example.thebigscreen.paging.BackInTheDaysFilmSource
+import com.example.thebigscreen.paging.NowPlayingFilmSource
 import com.example.thebigscreen.paging.PopularFilmSource
 import com.example.thebigscreen.paging.RecommendedFilmSource
 import com.example.thebigscreen.paging.SimilarFilmSource
@@ -31,7 +32,7 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
         ).flow
     }
 
-    fun getPopularMovies(filmType: FilmType): Flow<PagingData<Film>> {
+    fun getPopularFilms(filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
@@ -45,6 +46,15 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
                 TopRatedFilmSource(api = api, filmType = filmType)
+            }
+        ).flow
+    }
+
+    fun getNowPlayingFilms(filmType: FilmType): Flow<PagingData<Film>> {
+        return Pager(
+            config = PagingConfig(enablePlaceholders = false, pageSize = 20),
+            pagingSourceFactory = {
+                NowPlayingFilmSource(api = api, filmType = filmType)
             }
         ).flow
     }
