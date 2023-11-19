@@ -3,7 +3,7 @@ package com.example.thebigscreen.model
 import com.google.gson.annotations.SerializedName
 
 /** This is similar to Film only that everything is nullable.*/
-class Search (
+data class Search(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")

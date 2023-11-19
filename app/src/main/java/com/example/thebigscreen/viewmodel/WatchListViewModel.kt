@@ -1,6 +1,7 @@
 package com.example.thebigscreen.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,52 +14,47 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WatchListViewModel @Inject constructor(private val watchListRepository: WatchListRepository) :
-    ViewModel() {
+class WatchListViewModel @Inject constructor(private val repo: WatchListRepository) : ViewModel() {
 
     private val _addedToWatchList = mutableStateOf(0)
-    val addedToWatchList: MutableState<Int> = _addedToWatchList
+    val addedToWatchList: State<Int> = _addedToWatchList
 
     private val _watchList = mutableStateOf<Flow<List<MyListMovie>>>(emptyFlow())
     val watchList: MutableState<Flow<List<MyListMovie>>> = _watchList
-
 
     init {
         getWatchList()
     }
 
-
     fun addToWatchList(movie: MyListMovie) {
         viewModelScope.launch {
-            watchListRepository.addToWatchList(movie = movie)
+            repo.addToWatchList(movie)
         }.invokeOnCompletion {
             exists(movie.mediaId)
         }
     }
 
-
     fun exists(mediaId: Int) {
         viewModelScope.launch {
-            _addedToWatchList.value = watchListRepository.exists(mediaId)
+            _addedToWatchList.value = repo.exists(mediaId)
         }
     }
-
 
     fun removeFromWatchList(mediaId: Int) {
         viewModelScope.launch {
-            watchListRepository.removeFromWatchList(mediaId = mediaId)
+            repo.removeFromWatchList(mediaId)
         }.invokeOnCompletion {
-            exists(mediaId = mediaId)
+            exists(mediaId)
         }
     }
 
-    private fun getWatchList() {
-        _watchList.value = watchListRepository.getFullWatchList()
+    private fun getWatchList(){
+        _watchList.value = repo.getFullWatchList()
     }
 
     fun deleteWatchList() {
         viewModelScope.launch {
-            watchListRepository.deleteWatchList()
+            repo.deleteWatchList()
         }
     }
 }

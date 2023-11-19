@@ -11,14 +11,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PrefsViewModel @Inject constructor(private val prefsRepository: PrefsRepository) :
-    ViewModel() {
+class PrefsViewModel @Inject constructor(private val prefsRepo: PrefsRepository) : ViewModel() {
 
     fun updateIncludeAdult(includeAdult: Boolean) {
         viewModelScope.launch {
-            prefsRepository.updateIncludeAdult(includeAdult = includeAdult)
+            prefsRepo.updateIncludeAdult(includeAdult)
         }
     }
 
-    val includeAdult: State<Flow<Boolean?>> = mutableStateOf(prefsRepository.readIncludeAdult())
+    val includeAdult: State<Flow<Boolean?>> = mutableStateOf(prefsRepo.readIncludeAdult())
 }

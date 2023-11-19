@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 fun CustomSwitch(
     checkable: Boolean,
     checked: Boolean = true,
-    onCheckedChange: () -> Unit,
+    onCheckedChange: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -58,6 +58,7 @@ fun CustomSwitch(
         }
     }
 }
+
 
 @Preview
 @Composable

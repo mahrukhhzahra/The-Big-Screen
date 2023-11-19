@@ -6,25 +6,23 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WatchListRepository @Inject constructor(private val database: WatchListDatabase) {
-
-    suspend fun addToWatchList(movie: MyListMovie) {
-        database.movieDao.addToWatchList(movie = movie)
+    suspend fun addToWatchList(movie: MyListMovie){
+        database.moviesDao.addToWatchList(movie)
     }
 
-    suspend fun exists(mediaId: Int): Int {
-        return database.movieDao.exists(mediaId = mediaId)
+    suspend fun exists(mediaId: Int): Int{
+        return database.moviesDao.exists(mediaId)
     }
 
-    suspend fun removeFromWatchList(mediaId: Int) {
-        database.movieDao.removeFromWatchList(mediaId = mediaId)
+    suspend fun removeFromWatchList(mediaId: Int){
+        database.moviesDao.removeFromWatchList(mediaId)
     }
 
     fun getFullWatchList(): Flow<List<MyListMovie>> {
-        return database.movieDao.getFullWatchList()
+        return database.moviesDao.getFullWatchList()
     }
 
-    suspend fun deleteWatchList() {
-        database.movieDao.deleteWatchList()
+    suspend fun deleteWatchList(){
+        database.moviesDao.deleteWatchList()
     }
-
 }

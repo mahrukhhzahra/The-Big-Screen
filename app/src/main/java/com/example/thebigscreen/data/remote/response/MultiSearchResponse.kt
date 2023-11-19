@@ -3,8 +3,8 @@ package com.example.thebigscreen.data.remote.response
 import com.example.thebigscreen.model.Search
 import com.google.gson.annotations.SerializedName
 
-data class MultiSearchResponse (
-    @SerializedName("pages")
+class MultiSearchResponse(
+    @SerializedName("page")
     val page: Int,
     @SerializedName("results")
     val results: List<Search>,

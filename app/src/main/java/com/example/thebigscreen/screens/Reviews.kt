@@ -53,17 +53,17 @@ import com.skydoves.landscapist.coil.CoilImage
 
 @Destination
 @Composable
-fun ReviewScreen(
+fun ReviewsScreen(
     navigator: DestinationsNavigator,
     reviewsViewModel: ReviewsViewModel = hiltViewModel(),
     filmType: FilmType,
     filmId: Int,
-    filmTitle: String?,
+    filmTitle: String?
 ) {
     val reviews = reviewsViewModel.filmReviews.value.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = filmId) {
-        reviewsViewModel.getFilmReview(filmId = filmId, filmType = filmType)
+        reviewsViewModel.getFilmReview(filmId, filmType)
     }
 
     Column(
@@ -82,9 +82,7 @@ fun ReviewScreen(
                 navigator.navigateUp()
             }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "${reviews.itemCount}",
                     modifier = Modifier
@@ -107,7 +105,6 @@ fun ReviewScreen(
             }
         }
 
-
         Text(
             text = filmTitle ?: "",
             modifier = Modifier
@@ -121,14 +118,13 @@ fun ReviewScreen(
             color = AppOnPrimaryColor
         )
 
-        LazyColumn {// changes here
+        LazyColumn {
             items(reviews.itemSnapshotList) { review ->
                 ReviewItem(item = review)
             }
         }
     }
 }
-
 
 @Composable
 fun ReviewItem(item: Review?) {
@@ -138,9 +134,8 @@ fun ReviewItem(item: Review?) {
             .fillMaxWidth()
             .padding(top = 8.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Center
-        ) {
+
+        Row(horizontalArrangement = Arrangement.Center) {
             CoilImage(
                 modifier = Modifier
                     .clip(CircleShape)
@@ -161,8 +156,8 @@ fun ReviewItem(item: Review?) {
                         Icon(
                             modifier = Modifier.size(40.dp),
                             painter = painterResource(id = R.drawable.ic_user),
-                            contentDescription = null,
-                            tint = Color.LightGray
+                            tint = Color.LightGray,
+                            contentDescription = null
                         )
                     }
                 },
@@ -237,7 +232,6 @@ fun ReviewItem(item: Review?) {
                         onValueChange = {},
                         onRatingChanged = {}
                     )
-
 
                     Text(
                         text = item?.createdOn?.removeRange(10..item.createdOn.lastIndex) ?: "",

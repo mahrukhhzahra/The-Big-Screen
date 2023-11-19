@@ -13,11 +13,8 @@ class SearchFilmSource(
     private val api: ApiService,
     private val searchParams: String,
     private val includeAdult: Boolean
-) :
-    PagingSource<Int, Search>() {
-    override fun getRefreshKey(state: PagingState<Int, Search>): Int? {
-        return state.anchorPosition
-    }
+) : PagingSource<Int, Search>() {
+    override fun getRefreshKey(state: PagingState<Int, Search>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Search> {
         return try {
@@ -27,7 +24,6 @@ class SearchFilmSource(
                 searchParams = searchParams,
                 includeAdult = includeAdult
             )
-
             LoadResult.Page(
                 data = searchMovies.results,
                 prevKey = if (nextPage == 1) null else nextPage - 1,
@@ -39,6 +35,4 @@ class SearchFilmSource(
             return LoadResult.Error(e)
         }
     }
-
-
 }

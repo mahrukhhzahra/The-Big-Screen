@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,11 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.thebigscreen.R
 import com.example.thebigscreen.ui.theme.AppOnPrimaryColor
+import com.example.thebigscreen.ui.theme.AppPrimaryColor
 import com.example.thebigscreen.ui.theme.ButtonColor
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
+import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.coil.CoilImage
 import com.example.thebigscreen.model.Genre as MovieGenre
@@ -52,30 +55,31 @@ fun SearchResultItem(
     genres: List<MovieGenre>?,
     rating: Double,
     releaseYear: String?,
-    onClick: () -> Unit?,
+    onClick: () -> Unit?
 ) {
-    Box(modifier = Modifier
-        .padding(start = 8.dp, end = 8.dp, bottom = 12.dp)
-        .fillMaxWidth()
-        .height(130.dp)
-        .clip(RoundedCornerShape(8.dp))
-        .background(ButtonColor)
-        .clickable(
-            interactionSource = remember {
-                MutableInteractionSource()
-            },
-            indication = null
-        ) {
-            onClick()
-        }
+    Box(
+        modifier = Modifier
+            .padding(start = 8.dp, end = 8.dp, bottom = 12.dp)
+            .fillMaxWidth()
+            .height(130.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(ButtonColor)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+                onClick()
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             CoilImage(
                 imageModel = posterImage,
+                circularReveal = CircularReveal(duration = 1000),
+                previewPlaceholder = R.drawable.popcorn,
                 shimmerParams = ShimmerParams(
-                    baseColor = AppOnPrimaryColor,
+                    baseColor = AppPrimaryColor,
                     highlightColor = ButtonColor,
                     durationMillis = 500,
                     dropOff = 0.65F,
@@ -83,7 +87,7 @@ fun SearchResultItem(
                 ),
                 modifier = Modifier
                     .fillMaxHeight()
-                    .widthIn(86.67.dp)
+                    .width(86.67.dp)
                     .padding(4.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop,
@@ -97,21 +101,17 @@ fun SearchResultItem(
                     .padding(all = 8.dp)
                     .fillMaxSize()
             ) {
-                var paddingValue by remember {
-                    mutableIntStateOf(2)
-                }
+                var paddingValue by remember { mutableStateOf(2) }
                 Text(
                     text = when (mediaType) {
                         "tv" -> {
                             paddingValue = 2
                             "Series"
                         }
-
                         "movie" -> {
                             paddingValue = 2
                             "Movie"
                         }
-
                         else -> {
                             paddingValue = 0
                             ""
@@ -119,6 +119,7 @@ fun SearchResultItem(
                     },
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(size = 4.dp))
+                        // .background(Color(0XFFC9F964).copy(alpha = 0.75F))
                         .background(Color.LightGray.copy(alpha = 0.2F))
                         .padding(paddingValue.dp),
                     color = AppOnPrimaryColor.copy(alpha = 0.78F),
@@ -148,11 +149,8 @@ fun SearchResultItem(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-
                     RatingBar(
                         value = rating.toFloat() / 2,
-                        onValueChange = {},
-                        onRatingChanged = {},
                         modifier = Modifier.padding(end = 6.dp),
                         config = RatingBarConfig()
                             .style(RatingBarStyle.Normal)
@@ -164,11 +162,14 @@ fun SearchResultItem(
                             .numStars(5)
                             .size(16.dp)
                             .padding(4.dp),
+                        onValueChange = {},
+                        onRatingChanged = {}
                     )
                 }
 
-
-                LazyRow(modifier = Modifier.fillMaxWidth()) {
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     genres?.forEach {
                         item {
                             MovieGenreChip(genre = it.name)

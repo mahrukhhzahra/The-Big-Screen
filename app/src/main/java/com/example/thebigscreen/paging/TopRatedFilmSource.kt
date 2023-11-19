@@ -32,6 +32,4 @@ class TopRatedFilmSource(private val api: ApiService, private val filmType: Film
             return LoadResult.Error(e)
         }
     }
-
-
 }

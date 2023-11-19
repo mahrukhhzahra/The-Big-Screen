@@ -33,28 +33,16 @@ fun ExpandableText(
     modifier: Modifier = Modifier,
     minimizedMaxLines: Int = 2,
 ) {
-    var cutText by remember(text) {
-        mutableStateOf<String?>(null)
-    }
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-    val textLayoutResultState = remember {
-        mutableStateOf<TextLayoutResult?>(null)
-    }
-    val seeMoreSizeState = remember {
-        mutableStateOf<IntSize?>(null)
-    }
-    val seeMoreOffsetState = remember {
-        mutableStateOf<Offset?>(null)
-    }
-
+    var cutText by remember(text) { mutableStateOf<String?>(null) }
+    var expanded by remember { mutableStateOf(false) }
+    val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
+    val seeMoreSizeState = remember { mutableStateOf<IntSize?>(null) }
+    val seeMoreOffsetState = remember { mutableStateOf<Offset?>(null) }
 
     // getting raw values for smart cast
     val textLayoutResult = textLayoutResultState.value
     val seeMoreSize = seeMoreSizeState.value
     val seeMoreOffset = seeMoreOffsetState.value
-
 
     LaunchedEffect(text, expanded, textLayoutResult, seeMoreSize) {
         val lastLineIndex = minimizedMaxLines - 1
@@ -75,11 +63,11 @@ fun ExpandableText(
         }
     }
 
-    Box(modifier = modifier) {
+    Box(modifier) {
         Text(
-            text = cutText ?: text,
             color = AppOnPrimaryColor,
-            modifier = modifier
+            text = cutText ?: text,
+            modifier = Modifier
                 .clickable(
                     interactionSource = remember {
                         MutableInteractionSource()
@@ -92,36 +80,29 @@ fun ExpandableText(
                 },
             maxLines = if (expanded) Int.MAX_VALUE else minimizedMaxLines,
             overflow = TextOverflow.Ellipsis,
-            onTextLayout = {
-                textLayoutResultState.value = it
-            }
+            onTextLayout = { textLayoutResultState.value = it },
         )
-
 
         if (!expanded) {
             val density = LocalDensity.current
             Text(
-                text = "... See more",
                 color = Color(0x2DFF978C).copy(alpha = 0.78F),
+                text = "... See more",
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
-                onTextLayout = {
-                    seeMoreSizeState.value = it.size
-                },
-                modifier = modifier
+                onTextLayout = { seeMoreSizeState.value = it.size },
+                modifier = Modifier
                     .then(
-                        if (seeMoreOffset != null) {
-                            modifier.offset(
+                        if (seeMoreOffset != null)
+                            Modifier.offset(
                                 x = with(density) { seeMoreOffset.x.toDp() },
                                 y = with(density) { seeMoreOffset.y.toDp() },
                             )
-                        } else {
-                            modifier
-                        }
+                        else Modifier
                     )
                     .clickable(
                         interactionSource = remember {
-                            MutableInteractionSource()
+                            MutableInteractionSource ()
                         },
                         indication = null
                     ) {
@@ -135,7 +116,6 @@ fun ExpandableText(
                     )
             )
         }
-
     }
 }
 

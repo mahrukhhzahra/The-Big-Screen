@@ -12,18 +12,15 @@ class RecommendedFilmSource(
     private val api: ApiService,
     val filmId: Int,
     private val filmType: FilmType
-) :
-    PagingSource<Int, Film>() {
-    override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
-        return state.anchorPosition
-    }
+) : PagingSource<Int, Film>() {
+    override fun getRefreshKey(state: PagingState<Int, Film>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Film> {
         return try {
             val nextPage = params.key ?: 1
-            val recommendedMovies =
-                if (filmType == FilmType.MOVIE) api.getRecommendedMovies(page = nextPage, movieId = filmId)
-                else api.getRecommendedTvShows(page = nextPage, filmId = filmId)
+            val recommendedMovies = if (filmType == FilmType.MOVIE) api.getRecommendedMovies(
+                page = nextPage, movieId = filmId
+            ) else api.getRecommendedTvShows(page = nextPage, filmId = filmId)
 
             LoadResult.Page(
                 data = recommendedMovies.results,
@@ -36,6 +33,4 @@ class RecommendedFilmSource(
             return LoadResult.Error(e)
         }
     }
-
-
 }
