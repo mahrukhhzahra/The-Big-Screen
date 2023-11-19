@@ -190,7 +190,7 @@ fun Profile(
         }
 
         Text(
-            text = userName("NeatFlix User"),
+            text = userName("User"),
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
             color = AppOnPrimaryColor,
@@ -228,14 +228,14 @@ fun Profile(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.the_big_screen),
+                painter = painterResource(id = R.drawable.thebigscreen),
                 modifier = Modifier.widthIn(max = 100.dp),
                 alpha = 0.78F,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "version: 1.0-rc [dummy profile]",
+                text = "copyright @fatiq",
                 fontWeight = FontWeight.Light,
                 fontSize = 14.sp,
                 color = AppOnPrimaryColor.copy(alpha = 0.5F)

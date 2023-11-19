@@ -74,7 +74,7 @@ fun SplashScreen(
                     modifier = Modifier
                         .widthIn(max = 170.dp)
                         .alpha(0.78F),
-                    painter = painterResource(id = R.drawable.the_big_screen),
+                    painter = painterResource(id = R.drawable.thebigscreen),
                     contentDescription = null
                 )
             }
