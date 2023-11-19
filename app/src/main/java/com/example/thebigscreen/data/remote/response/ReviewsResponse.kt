@@ -28,7 +28,6 @@ data class Review(
     val url: String
 )
 
-
 data class AuthorDetails(
     @SerializedName("name")
     val name: String,

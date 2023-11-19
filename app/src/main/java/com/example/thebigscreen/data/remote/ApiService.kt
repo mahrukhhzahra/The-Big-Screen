@@ -14,21 +14,19 @@ import com.example.thebigscreen.util.Constants
 import retrofit2.http.Path
 
 interface ApiService {
-
-    /** **Movies** **/
-
+    /** **Movies** */
     @GET("trending/movie/day")
     suspend fun getTrendingMovies(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "end",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("movie/top_rated")
@@ -42,14 +40,14 @@ interface ApiService {
     suspend fun getNowPlayingMovies(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("movie/{movie_id}/recommendations")
@@ -57,7 +55,7 @@ interface ApiService {
         @Path("movie_id") movieId: Int,
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("movie/{movie_id}/similar")
@@ -65,7 +63,7 @@ interface ApiService {
         @Path("movie_id") filmId: Int,
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): FilmResponse
 
     @GET("discover/movie?")
@@ -75,19 +73,19 @@ interface ApiService {
         @Query("primary_release_date.lte") lteReleaseDate: String = "1981-01-01",
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = "en",
-        @Query("sort_by") sortBy: String = "vote_count.desc",
+        @Query("sort_by") sortBy: String = "vote_count.desc"
     ): FilmResponse
 
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieCast(
-        @Path("movie_key") filmId: Int,
-        @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Path("movie_id") filmId: Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY
     ): CastResponse
 
     @GET("genre/movie/list")
     suspend fun getMovieGenres(
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): GenreResponse
 
     @GET("search/multi")
@@ -96,9 +94,8 @@ interface ApiService {
         @Query("page") page: Int = 0,
         @Query("include_adult") includeAdult: Boolean = true,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en"
     ): MultiSearchResponse
-
 
     /** **Tv Shows**
      *
@@ -107,13 +104,13 @@ interface ApiService {
     @GET("genre/tv/list")
     suspend fun getTvShowGenres(
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = "en-US"
     ): GenreResponse
 
     @GET("tv/{tv_id}/credits")
     suspend fun getTvShowCast(
         @Path("tv_id") filmId: Int,
-        @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("api_key") apiKey: String = Constants.API_KEY
     ): CastResponse
 
     @GET("tv/{tv_id}/similar")
@@ -121,35 +118,36 @@ interface ApiService {
         @Path("tv_id") filmId: Int,
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
 
     @GET("trending/tv/day")
     suspend fun getTrendingTvSeries(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
 
     @GET("tv/popular")
     suspend fun getPopularTvShows(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
+
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTvShows(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
 
     @GET("tv/on_the_air")
     suspend fun getOnTheAirTvShows(
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
 
     @GET("tv/{tv_id}/recommendations")
@@ -157,7 +155,7 @@ interface ApiService {
         @Path("tv_id") filmId: Int,
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): FilmResponse
 
     @GET("discover/tv?")
@@ -166,29 +164,26 @@ interface ApiService {
         @Query("first_air_date.gte") gteFirstAirDate: String = "1940-01-01",
         @Query("first_air_date.lte") lteFirstAirDate: String = "1981-01-01",
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
-        @Query("sort_by") sortBy: String = "vote_count.desc",
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sortBy: String = "vote_count.desc"
     ): FilmResponse
 
-
-    /** Reviews **/
+    /** Reviews*/
     @GET("{film_path}/{film_id}/reviews?")
     suspend fun getMovieReviews(
         @Path("film_id") filmId: Int,
         @Path("film_path") filmPath: String,
         @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = "en",
+        @Query("language") language: String = "en-US"
     ): ReviewsResponse
 
+    /** Watch providers (US only)*/
 
-    /** Watch providers (US only) **/
     @GET("{film_path}/{film_id}/watch/providers?")
     suspend fun getWatchProviders(
         @Path("film_path") filmPath: String,
         @Path("film_id") filmId: Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
     ): WatchProviderResponse
-
-
 }

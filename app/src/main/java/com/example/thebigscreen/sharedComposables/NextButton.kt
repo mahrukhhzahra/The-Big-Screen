@@ -39,7 +39,7 @@ fun NextButton(onClick: () -> Unit) {
                 .background(ButtonColor)
         ) {
             ConstraintLayout {
-                val icon = createRef()
+                val (icon) = createRefs()
                 Icon(
                     imageVector = Icons.Rounded.ArrowForward,
                     contentDescription = null,
@@ -54,15 +54,11 @@ fun NextButton(onClick: () -> Unit) {
                             end.linkTo(parent.end)
                         }
                         .clickable(
-                            interactionSource = remember {
-                                MutableInteractionSource()
-                            },
+                            interactionSource = remember { MutableInteractionSource() },
                             indication = null
                         ) { onClick() }
                 )
-
             }
-
         }
     }
 }

@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(val repository: FilmRepository) : ViewModel() {
-
     private var _similarFilms = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
     val similarMovies: State<Flow<PagingData<Film>>> = _similarFilms
 
@@ -41,7 +40,7 @@ class DetailsViewModel @Inject constructor(val repository: FilmRepository) : Vie
 
     fun getFilmCast(filmId: Int, filmType: FilmType) {
         viewModelScope.launch {
-            repository.getFilmCast(filmId = filmId, filmType = filmType).also {
+            repository.getFilmCast(filmId = filmId, filmType).also {
                 if (it is Resource.Success) {
                     _filmCast.value = it.data!!.castResult
                 }

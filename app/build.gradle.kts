@@ -11,7 +11,8 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+//    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
 
 }
 
@@ -181,8 +182,10 @@ dependencies {
 
 
     // RaamCosta Navigation
-    implementation("io.github.raamcosta.compose-destinations:core:1.4.0-beta")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.4.0-beta")
+    implementation("io.github.raamcosta.compose-destinations:core:1.4.0-beta")  // previous
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.52")
+//    ksp("io.github.raamcosta.compose-destinations:ksp:1.4.0-beta")    // previous
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.52")
 
 
 

@@ -9,7 +9,7 @@ interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToWatchList(movie: MyListMovie)
 
-    @Query("DELETE FROM watch_list_table WHERE mediaId = :mediaId")
+    @Query("DELETE FROM watch_list_table WHERE mediaId =:mediaId")
     suspend fun removeFromWatchList(mediaId: Int)
 
     @Query("DELETE FROM watch_list_table")

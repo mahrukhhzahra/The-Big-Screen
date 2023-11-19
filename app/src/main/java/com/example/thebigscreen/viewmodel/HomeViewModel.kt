@@ -27,11 +27,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val filmRepository: FilmRepository,
-    private val genreRepository: GenreRepository,
+    private val genreRepository: GenreRepository
 ) : ViewModel() {
-
     private var _filmGenres = mutableStateListOf(Genre(null, "All"))
     val filmGenres: SnapshotStateList<Genre> = _filmGenres
+
+    var selectedGenre: MutableState<Genre> = mutableStateOf(Genre(null, "All"))
+    var selectedFilmType: MutableState<FilmType> = mutableStateOf(FilmType.MOVIE)
 
     private var _trendingMovies = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
     val trendingMoviesState: State<Flow<PagingData<Film>>> = _trendingMovies
@@ -39,8 +41,8 @@ class HomeViewModel @Inject constructor(
     private var _popularFilms = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
     val popularFilmsState: State<Flow<PagingData<Film>>> = _popularFilms
 
-    private var _topRatedFilms = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
-    val topRatedFilmsState: State<Flow<PagingData<Film>>> = _topRatedFilms
+    private var _topRatedFilm = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
+    val topRatedFilmState: State<Flow<PagingData<Film>>> = _topRatedFilm
 
     private var _nowPlayingFilm = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
     val nowPlayingMoviesState: State<Flow<PagingData<Film>>> = _nowPlayingFilm
@@ -53,21 +55,15 @@ class HomeViewModel @Inject constructor(
 
     private var _recommendedFilms = mutableStateOf<Flow<PagingData<Film>>>(emptyFlow())
     val recommendedMovies: MutableState<Flow<PagingData<Film>>> = _recommendedFilms
-
-
     var randomMovieId: Int? = null
-
-    var selectedGenre: MutableState<Genre> = mutableStateOf(Genre(null, "All"))
-    var selectedFilmType: MutableState<FilmType> = mutableStateOf(FilmType.MOVIE)
 
     init {
         refreshAll()
     }
 
-
     fun refreshAll(
         genreId: Int? = selectedGenre.value.id,
-        filmType: FilmType = selectedFilmType.value,
+        filmType: FilmType = selectedFilmType.value
     ) {
         if (filmGenres.size == 1) {
             getFilmGenre(selectedFilmType.value)
@@ -81,20 +77,18 @@ class HomeViewModel @Inject constructor(
         getNowPlayingFilms(genreId, filmType)
         getUpcomingFilms(genreId)
         getBackInTheDaysFilms(genreId, filmType)
-        randomMovieId?.let { id ->
-            getRecommendedFilms(movieId = id, genreId, filmType)
-        }
+        randomMovieId?.let { id -> getRecommendedFilms(movieId = id, genreId, filmType) }
     }
 
     fun filterBySetSelectedGenre(genre: Genre) {
         selectedGenre.value = genre
-        refreshAll(genreId = genre.id)
+        refreshAll(genre.id)
     }
 
     fun getFilmGenre(filmType: FilmType = selectedFilmType.value) {
         viewModelScope.launch {
             val defaultGenre = Genre(null, "All")
-            when (val results = genreRepository.getMoviesGenre(filmType = filmType)) {
+            when (val results = genreRepository.getMoviesGenre(filmType)) {
                 is Resource.Success -> {
                     _filmGenres.clear()
                     _filmGenres.add(defaultGenre)
@@ -103,12 +97,10 @@ class HomeViewModel @Inject constructor(
                         _filmGenres.add(it)
                     }
                 }
-
                 is Resource.Error -> {
                     Timber.e("Error loading Genres")
                 }
-
-                else -> {}
+                else -> { }
             }
         }
     }
@@ -130,27 +122,27 @@ class HomeViewModel @Inject constructor(
     private fun getPopularFilms(genreId: Int?, filmType: FilmType) {
         viewModelScope.launch {
             _popularFilms.value = if (genreId != null) {
-                filmRepository.getPopularFilms(filmType = filmType).map { results ->
+                filmRepository.getPopularFilms(filmType).map { results ->
                     results.filter { movie ->
                         movie.genreIds!!.contains(genreId)
                     }
                 }.cachedIn(viewModelScope)
             } else {
-                filmRepository.getPopularFilms(filmType = filmType).cachedIn(viewModelScope)
+                filmRepository.getPopularFilms(filmType).cachedIn(viewModelScope)
             }
         }
     }
 
     private fun getTopRatedFilm(genreId: Int?, filmType: FilmType) {
         viewModelScope.launch {
-            _topRatedFilms.value = if (genreId != null) {
-                filmRepository.getTopRatedFilms(filmType = filmType).map { results ->
+            _topRatedFilm.value = if (genreId != null) {
+                filmRepository.getTopRatedFilm(filmType).map { results ->
                     results.filter { movie ->
                         movie.genreIds!!.contains(genreId)
                     }
                 }.cachedIn(viewModelScope)
             } else {
-                filmRepository.getTopRatedFilms(filmType = filmType).cachedIn(viewModelScope)
+                filmRepository.getTopRatedFilm(filmType).cachedIn(viewModelScope)
             }
         }
     }
@@ -158,33 +150,25 @@ class HomeViewModel @Inject constructor(
     private fun getNowPlayingFilms(genreId: Int?, filmType: FilmType) {
         viewModelScope.launch {
             _nowPlayingFilm.value = if (genreId != null) {
-                filmRepository.getNowPlayingFilms(filmType = filmType).map { results ->
+                filmRepository.getNowPlayingFilms(filmType).map { results ->
                     results.filter { movie ->
                         movie.genreIds!!.contains(genreId)
                     }
                 }.cachedIn(viewModelScope)
             } else {
-                filmRepository.getNowPlayingFilms(filmType = filmType).cachedIn(viewModelScope)
+                filmRepository.getNowPlayingFilms(filmType).cachedIn(viewModelScope)
             }
         }
     }
 
-    private fun getRecommendedFilms(
-        movieId: Int,
-        genreId: Int? = null,
-        filmType: FilmType = selectedFilmType.value,
-    ) {
+    fun getRecommendedFilms(movieId: Int, genreId: Int? = null, filmType: FilmType = selectedFilmType.value) {
         viewModelScope.launch {
             _recommendedFilms.value = if (genreId != null) {
-                filmRepository.getRecommendedFilms(movieId = movieId, filmType = filmType)
-                    .map { results ->
-                        results.filter { movie ->
-                            movie.genreIds!!.contains(genreId)
-                        }
-                    }.cachedIn(viewModelScope)
+                filmRepository.getRecommendedFilms(movieId, filmType).map { result ->
+                    result.filter { movie -> movie.genreIds!!.contains(genreId) }
+                }.cachedIn(viewModelScope)
             } else {
-                filmRepository.getRecommendedFilms(filmType = filmType, movieId = movieId)
-                    .cachedIn(viewModelScope)
+                filmRepository.getRecommendedFilms(movieId, filmType).cachedIn(viewModelScope)
             }
         }
     }
@@ -206,13 +190,13 @@ class HomeViewModel @Inject constructor(
     private fun getBackInTheDaysFilms(genreId: Int?, filmType: FilmType) {
         viewModelScope.launch {
             _backInTheDaysFilms.value = if (genreId != null) {
-                filmRepository.getBackInTheDaysFilms(filmType = filmType).map { results ->
+                filmRepository.getBackInTheDaysFilms(filmType).map { results ->
                     results.filter { movie ->
                         movie.genreIds!!.contains(genreId)
                     }
                 }.cachedIn(viewModelScope)
             } else {
-                filmRepository.getBackInTheDaysFilms(filmType = filmType).cachedIn(viewModelScope)
+                filmRepository.getBackInTheDaysFilms(filmType).cachedIn(viewModelScope)
             }
         }
     }

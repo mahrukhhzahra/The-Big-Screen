@@ -25,7 +25,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Singleton
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {
@@ -59,43 +58,36 @@ object AppModule {
     @Provides
     fun provideMoviesRepository(api: ApiService) = FilmRepository(api = api)
 
-
     @Singleton
     @Provides
     fun provideSearchRepository(api: ApiService) = SearchRepository(api = api)
 
     @Singleton
     @Provides
-    fun providesGenresRepository(api: ApiService) = GenreRepository(api = api)
-
+    fun providesGenresRepository(api: ApiService) = GenreRepository(api)
 
     @Singleton
     @Provides
     fun providesWatchListRepository(watchListDatabase: WatchListDatabase) =
         WatchListRepository(database = watchListDatabase)
 
-
     @Singleton
     @Provides
-    fun providesReviewsRepository(api: ApiService): ReviewsRepository = ReviewsRepository(api = api)
+    fun providesReviewsRepository(api: ApiService): ReviewsRepository = ReviewsRepository(api)
 
-
-    @Singleton
     @Provides
+    @Singleton
     fun providesWatchListDatabase(application: Application): WatchListDatabase {
         return Room.databaseBuilder(
             application.applicationContext,
             WatchListDatabase::class.java,
             "watch_list_db"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        ).fallbackToDestructiveMigration().build()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providesDataStore(application: Application): UserPreferences {
         return UserPreferences(application.applicationContext)
     }
-
 }

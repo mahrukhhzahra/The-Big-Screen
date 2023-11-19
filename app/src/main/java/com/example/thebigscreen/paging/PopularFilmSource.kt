@@ -10,9 +10,7 @@ import java.io.IOException
 
 class PopularFilmSource(private val api: ApiService, private val filmType: FilmType) :
     PagingSource<Int, Film>() {
-    override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
-        return state.anchorPosition
-    }
+    override fun getRefreshKey(state: PagingState<Int, Film>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Film> {
         return try {
@@ -20,7 +18,6 @@ class PopularFilmSource(private val api: ApiService, private val filmType: FilmT
             val popularMovies =
                 if (filmType == FilmType.MOVIE) api.getPopularMovies(page = nextPage)
                 else api.getPopularTvShows(page = nextPage)
-
             LoadResult.Page(
                 data = popularMovies.results,
                 prevKey = if (nextPage == 1) null else nextPage - 1,
@@ -32,6 +29,4 @@ class PopularFilmSource(private val api: ApiService, private val filmType: FilmT
             return LoadResult.Error(e)
         }
     }
-
-
 }

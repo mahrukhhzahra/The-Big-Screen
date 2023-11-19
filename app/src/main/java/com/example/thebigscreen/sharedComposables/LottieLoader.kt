@@ -23,51 +23,43 @@ fun LoopReverseLottieLoader(
     enableMergePaths: Boolean = true,
 ) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(lottieFile))
-    val reverse = remember {
-        mutableStateOf(false)
-    }
+    val reverse = remember { mutableStateOf(false) }
     val anim = rememberLottieAnimatable()
-
-    if (reverse.value.not()) {
+    if (reverse.value.not())
         LaunchedEffect(key1 = composition) {
             anim.animate(composition = composition, speed = 1f)
             reverse.value = true
         }
-    }
     if (reverse.value) {
-        LaunchedEffect(key1 = composition) {
+        LaunchedEffect(composition) {
             anim.animate(composition = composition, speed = -1f)
             reverse.value = false
         }
     }
 
-
     LottieAnimation(
-        composition = composition,
+        composition,
         anim.value,
         modifier = modifier,
         enableMergePaths = remember { enableMergePaths },
         alignment = alignment
     )
-
 }
-
 
 @Composable
 fun LottieLoader(
     modifier: Modifier = Modifier,
-    @RawRes lottieFile: Int,
+    @RawRes lottieFile: Int
 ) {
     val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(resId = lottieFile),
-        onRetry = { failCount, previousException ->
-            Timber.e("Failed ${failCount}X with exception. Reason: ${previousException.localizedMessage}")
+        LottieCompositionSpec.RawRes(lottieFile),
+        onRetry = { failCount, exception ->
+            Timber.e("Failed ${failCount}X with exception. Reason: ${exception.localizedMessage}")
             // stop retrying
             false
         }
     )
-    val progress by animateLottieCompositionAsState(composition = composition)
-
+    val progress by animateLottieCompositionAsState(composition)
     LottieAnimation(
         composition = composition,
         progress = progress,

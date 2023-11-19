@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 /**Unused attributes were not included here*/
-data class Cast (
+data class Cast(
     @SerializedName("known_for_department")
     val department: String,
     @SerializedName("name")

@@ -20,5 +20,4 @@ class ReviewsRepository @Inject constructor(private val api: ApiService) {
             }
         ).flow
     }
-
 }

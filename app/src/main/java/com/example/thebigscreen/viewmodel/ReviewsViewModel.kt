@@ -1,6 +1,7 @@
 package com.example.thebigscreen.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,17 +17,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ReviewsViewModel @Inject constructor(private val reviewsRepository: ReviewsRepository) :
-    ViewModel() {
+class ReviewsViewModel @Inject constructor(private val repo: ReviewsRepository) : ViewModel() {
 
     private val _filmReviews = mutableStateOf<Flow<PagingData<Review>>>(emptyFlow())
-    val filmReviews: MutableState<Flow<PagingData<Review>>> = _filmReviews
+    val filmReviews: State<Flow<PagingData<Review>>> = _filmReviews
 
     fun getFilmReview(filmId: Int, filmType: FilmType) {
         viewModelScope.launch {
-            _filmReviews.value =
-                reviewsRepository.getFilmReviews(filmId = filmId, filmType = filmType)
-                    .cachedIn(viewModelScope)
+            _filmReviews.value = repo.getFilmReviews(filmId = filmId, filmType).cachedIn(viewModelScope)
         }
     }
 }

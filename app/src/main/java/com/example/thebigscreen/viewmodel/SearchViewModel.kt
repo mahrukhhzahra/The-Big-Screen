@@ -1,6 +1,7 @@
 package com.example.thebigscreen.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,19 +21,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
-    prefsRepository: PrefsRepository,
+    prefsRepo: PrefsRepository
 ) : ViewModel() {
-
     private var _multiSearch = mutableStateOf<Flow<PagingData<Search>>>(emptyFlow())
-    val multiSearchState: MutableState<Flow<PagingData<Search>>> = _multiSearch
+    val multiSearchState: State<Flow<PagingData<Search>>> = _multiSearch
 
-    val includeAdult: MutableState<Flow<Boolean?>> =
-        mutableStateOf(prefsRepository.readIncludeAdult())
+    val includeAdult: State<Flow<Boolean?>> = mutableStateOf(prefsRepo.readIncludeAdult())
 
     var searchParam = mutableStateOf("")
     var previousSearch = mutableStateOf("")
-    var searchParamState: MutableState<String> = searchParam
-
+    var searchParamState: State<String> = searchParam
 
     init {
         searchParam.value = ""
@@ -43,15 +41,14 @@ class SearchViewModel @Inject constructor(
             if (searchParam.value.isNotEmpty()) {
                 _multiSearch.value = searchRepository.multiSearch(
                     searchParams = searchParam.value,
-                    includeAdult = includeAdult
+                    includeAdult
                 ).map { result ->
                     result.filter {
-                        ((it.title != null || it.originalName != null || it.originalTitle != null)
-                                && (it.mediaType == "tv" || it.mediaType == "movie"))
+                        ((it.title != null || it.originalName != null || it.originalTitle != null) &&
+                                (it.mediaType == "tv" || it.mediaType == "movie"))
                     }
                 }.cachedIn(viewModelScope)
             }
         }
     }
-
 }

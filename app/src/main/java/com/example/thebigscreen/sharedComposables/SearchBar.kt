@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TextFieldDefaults.textFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,7 +49,7 @@ import kotlinx.coroutines.delay
 fun SearchBar(
     autoFocus: Boolean,
     viewModel: SearchViewModel = hiltViewModel(),
-    onSearch: () -> Unit,
+    onSearch: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -58,12 +59,8 @@ fun SearchBar(
             .fillMaxWidth()
             .height(54.dp)
     ) {
-        var searchInput: String by remember {
-            mutableStateOf("")
-        }
-        val focusRequester = remember {
-            FocusRequester()
-        }
+        var searchInput: String by remember { mutableStateOf("") }
+        val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
 
         LaunchedEffect(key1 = searchInput) {
@@ -79,11 +76,7 @@ fun SearchBar(
         TextField(
             value = searchInput,
             onValueChange = { newValue ->
-                searchInput = if (newValue.trim().isNotEmpty()) {
-                    newValue
-                } else {
-                    ""
-                }
+                searchInput = if (newValue.trim().isNotEmpty()) newValue else ""
                 viewModel.searchParam.value = searchInput
             },
             modifier = Modifier
@@ -96,14 +89,13 @@ fun SearchBar(
                     color = AppOnPrimaryColor.copy(alpha = 0.8F)
                 )
             },
-            colors = textFieldColors(
-                /*textColor = Color(0xFFF5F5F5),
-                backgroundColor = Color.Transparent,*/
-                disabledTextColor = Color(0xFFDCDCDC),
-                focusedIndicatorColor = Color(0xFF7CAF4A),
-                unfocusedIndicatorColor = Color(0xFF646464),
-            ),
-            keyboardOptions = KeyboardOptions(
+            colors = TextFieldDefaults.textFieldColors( // changes here
+                focusedTextColor = Color.White.copy(alpha = 0.78F),
+                containerColor = Color.Transparent,
+                disabledTextColor = Color.LightGray,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ), keyboardOptions = KeyboardOptions(
                 autoCorrect = true,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
@@ -129,14 +121,15 @@ fun SearchBar(
                 Row {
                     AnimatedVisibility(visible = searchInput.trim().isNotEmpty()) {
                         IconButton(onClick = {
+
                             focusManager.clearFocus()
                             searchInput = ""
                             viewModel.searchParam.value = ""
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Clear,
-                                contentDescription = null,
-                                tint = AppOnPrimaryColor
+                                tint = AppOnPrimaryColor,
+                                contentDescription = null
                             )
                         }
                     }
@@ -153,13 +146,12 @@ fun SearchBar(
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_search),
-                            contentDescription = null,
-                            tint = AppOnPrimaryColor
+                            tint = AppOnPrimaryColor,
+                            contentDescription = null
                         )
                     }
                 }
             }
-
         )
     }
 }

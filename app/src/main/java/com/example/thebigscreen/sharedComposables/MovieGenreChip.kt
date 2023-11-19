@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 fun MovieGenreChip(
     genre: String,
     background: Color = Color(0XFFC9F964).copy(alpha = 0.16F),
-    textColor: Color =  Color(0XFFC9F964)
+    textColor: Color = Color(0XFFC9F964)
 ) {
     Box(
         modifier = Modifier
@@ -33,7 +33,7 @@ fun MovieGenreChip(
         contentAlignment = Alignment.Center
     ) {
         Text(
-           text = genre,
+            text = genre,
             color = textColor,
             textAlign = TextAlign.Center,
             fontSize = 14.sp,
@@ -42,6 +42,7 @@ fun MovieGenreChip(
         )
     }
 }
+
 
 @Preview
 @Composable

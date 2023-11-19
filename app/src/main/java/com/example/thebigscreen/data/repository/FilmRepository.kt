@@ -21,13 +21,14 @@ import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import javax.inject.Inject
 
-class FilmRepository @Inject constructor(private val api: ApiService) {
-
+class FilmRepository @Inject constructor(
+    private val api: ApiService
+) {
     fun getTrendingFilms(filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                TrendingFilmSource(api = api, filmType = filmType)
+                TrendingFilmSource(api = api, filmType)
             }
         ).flow
     }
@@ -36,16 +37,16 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                PopularFilmSource(api = api, filmType = filmType)
+                PopularFilmSource(api = api, filmType)
             }
         ).flow
     }
 
-    fun getTopRatedFilms(filmType: FilmType): Flow<PagingData<Film>> {
+    fun getTopRatedFilm(filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                TopRatedFilmSource(api = api, filmType = filmType)
+                TopRatedFilmSource(api = api, filmType)
             }
         ).flow
     }
@@ -54,7 +55,7 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                NowPlayingFilmSource(api = api, filmType = filmType)
+                NowPlayingFilmSource(api = api, filmType)
             }
         ).flow
     }
@@ -68,39 +69,34 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
         ).flow
     }
 
-
     fun getBackInTheDaysFilms(filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                BackInTheDaysFilmSource(api = api, filmType = filmType)
+                BackInTheDaysFilmSource(api = api, filmType)
             }
         ).flow
     }
-
 
     fun getSimilarFilms(movieId: Int, filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                SimilarFilmSource(api = api, filmId = movieId, filmType = filmType)
+                SimilarFilmSource(api = api, filmId = movieId, filmType)
             }
         ).flow
     }
-
 
     fun getRecommendedFilms(movieId: Int, filmType: FilmType): Flow<PagingData<Film>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = {
-                RecommendedFilmSource(api = api, filmId = movieId, filmType = filmType)
+                RecommendedFilmSource(api = api, filmId = movieId, filmType)
             }
         ).flow
     }
 
-
-    /** Non-paging data **/
-
+    /** Non-paging data */
     suspend fun getFilmCast(filmId: Int, filmType: FilmType): Resource<CastResponse> {
         val response = try {
             if (filmType == FilmType.MOVIE) api.getMovieCast(filmId = filmId)
@@ -108,13 +104,11 @@ class FilmRepository @Inject constructor(private val api: ApiService) {
         } catch (e: Exception) {
             return Resource.Error("Error when loading movie cast")
         }
-        return Resource.Success(data = response)
+        return Resource.Success(response)
     }
 
-
     suspend fun getWatchProviders(
-        filmType: FilmType,
-        filmId: Int,
+        filmType: FilmType, filmId: Int
     ): Resource<WatchProviderResponse> {
         val response = try {
             if (filmType == FilmType.MOVIE) api.getWatchProviders(
