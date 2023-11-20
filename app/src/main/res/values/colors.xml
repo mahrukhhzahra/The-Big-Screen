@@ -10,4 +10,8 @@
 
     <color name="dark_purple">#FF180E36</color>
 
+
+    <color name="yellow">#FF9800</color>
+    <color name="red">#E91E2F</color>
+
 </resources>
