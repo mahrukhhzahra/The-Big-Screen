@@ -83,7 +83,9 @@ fun Profile(
                 .constrainAs(backButton) {
                     start.linkTo(parent.start, margin = 10.dp)
                     top.linkTo(parent.top, margin = 16.dp)
-                }) {
+                }
+                .clip(CircleShape)
+        ) {
             navigator.navigateUp()
         }
 
@@ -93,7 +95,8 @@ fun Profile(
                 .constrainAs(editButton) {
                     end.linkTo(parent.end, margin = 10.dp)
                     top.linkTo(parent.top, margin = 16.dp)
-                },
+                }
+                .clip(CircleShape),
             containerColor = ButtonColor,
             contentColor = AppOnPrimaryColor,
             onClick = { }) {

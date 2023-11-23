@@ -1,6 +1,7 @@
 package com.example.thebigscreen.sharedComposables
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.FloatingActionButton
@@ -8,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.thebigscreen.ui.theme.ButtonColor
 import com.example.thebigscreen.ui.theme.AppOnPrimaryColor
@@ -16,7 +18,7 @@ import com.example.thebigscreen.ui.theme.AppOnPrimaryColor
 fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
     FloatingActionButton(
-        modifier = modifier.size(42.dp),
+        modifier = modifier.size(42.dp).clip(CircleShape),
         containerColor = ButtonColor,
         contentColor = AppOnPrimaryColor,
         onClick = { onClick() }) {
