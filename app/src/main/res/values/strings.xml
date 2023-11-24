@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TheBigScreen</string>
+
+    <string name="hello">The Big Screen</string>
+    <string name="welcome">Welcome\n</string>
+    <string name="intro_message">Sign in or create a new Account</string>
+    <string name="welcome_screen_image">Welcome Screen Image</string>
+    <string name="go_to_sign_in">Go to Sign In</string>
+    <string name="no_account_yet_msg">No account yet? Sign up\n</string>
+    <string name="arrow_back">Back Button\n</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="full_name">Full name</string>
+    <string name="enter_your_name">enter your name\n</string>
+    <string name="email_address">Email address</string>
+    <string name="sample_email">john@gmail.com</string>
+    <string name="create_password">Create Password</string>
+    <string name="enter_your_password">enter your password</string>
+    <string name="sign_up">Sign Up!</string>
+    <string name="sign_in">Sign in</string>
+    <string name="remember_me">Remember me</string>
+    <string name="welcome_back">Welcome Back!</string>
 </resources>

@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thebigscreen.R
 import com.example.thebigscreen.data.local.MyListMovie
-import com.example.thebigscreen.screens.destinations.HomeDestination
+import com.example.thebigscreen.destinations.HomeDestination
 import com.example.thebigscreen.sharedComposables.BackButton
 import com.example.thebigscreen.sharedComposables.SearchBar
 import com.example.thebigscreen.sharedComposables.SearchResultItem

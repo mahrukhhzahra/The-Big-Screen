@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.thebigscreen.R
-import com.example.thebigscreen.screens.destinations.HomeDestination
+import com.example.thebigscreen.destinations.SignUpScreenDestination
 import com.example.thebigscreen.sharedComposables.LottieLoader
 import com.example.thebigscreen.ui.theme.AppPrimaryColor
 import com.ramcosta.composedestinations.annotation.Destination
@@ -61,7 +61,8 @@ fun SplashScreen(
                 animateLogo = true
                 delay(2000)
                 navigator!!.popBackStack()
-                navigator.navigate(HomeDestination())
+//                navigator.navigate(HomeDestination())     changes here
+                navigator.navigate(SignUpScreenDestination())
             }
 
             this@Column.AnimatedVisibility(

@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thebigscreen.R
-import com.example.thebigscreen.screens.destinations.WatchListDestination
+import com.example.thebigscreen.destinations.WatchListDestination
 import com.example.thebigscreen.sharedComposables.BackButton
 import com.example.thebigscreen.sharedComposables.CustomSwitch
 import com.example.thebigscreen.ui.theme.AppOnPrimaryColor
@@ -83,7 +83,9 @@ fun Profile(
                 .constrainAs(backButton) {
                     start.linkTo(parent.start, margin = 10.dp)
                     top.linkTo(parent.top, margin = 16.dp)
-                }) {
+                }
+                .clip(CircleShape)
+        ) {
             navigator.navigateUp()
         }
 
@@ -93,7 +95,8 @@ fun Profile(
                 .constrainAs(editButton) {
                     end.linkTo(parent.end, margin = 10.dp)
                     top.linkTo(parent.top, margin = 16.dp)
-                },
+                }
+                .clip(CircleShape),
             containerColor = ButtonColor,
             contentColor = AppOnPrimaryColor,
             onClick = { }) {
