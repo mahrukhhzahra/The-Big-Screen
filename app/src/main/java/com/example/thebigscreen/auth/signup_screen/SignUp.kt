@@ -1,6 +1,7 @@
 package com.example.thebigscreen.auth.signup_screen
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thebigscreen.R
 import com.example.thebigscreen.destinations.SignInScreenDestination
+import com.example.thebigscreen.ui.theme.AppPrimaryColor
 import com.example.thebigscreen.ui.theme.lightBlue
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -75,7 +77,9 @@ fun SignUpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = AppPrimaryColor)       // changes
             .padding(start = 30.dp, end = 30.dp),
+
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -84,20 +88,24 @@ fun SignUpScreen(
             text = "Create Account",
             fontWeight = FontWeight.Bold,
             fontSize = 35.sp,
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = FontFamily.Serif,
+            color = Color.White
         )
         Text(
             text = "Enter your credential's to register",
             fontWeight = FontWeight.Medium,
-            fontSize = 15.sp, color = Color.Gray,
-            fontFamily = FontFamily.SansSerif,
+            fontSize = 15.sp,
+            color = Color.White,
+            fontFamily = FontFamily.Serif,
+        )
 
-            )
+        Spacer(modifier = Modifier.height(20.dp))
+
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = email,
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = lightBlue,
+//                containerColor = lightBlue,
                 cursorColor = Color.Black,
                 disabledLabelColor = lightBlue,
                 focusedIndicatorColor = Color.Transparent,
@@ -111,15 +119,23 @@ fun SignUpScreen(
             singleLine = true,
             placeholder = {
                 Text(text = "Email")
-            }
-        )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+       )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+
+
+        var passwordVisible by remember {
+            mutableStateOf(false)
+        }
+
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = lightBlue,
+//                containerColor = lightBlue,
                 cursorColor = Color.Black,
                 disabledLabelColor = lightBlue,
                 focusedIndicatorColor = Color.Transparent,
@@ -132,8 +148,26 @@ fun SignUpScreen(
             singleLine = true,
             placeholder = {
                 Text(text = "Password")
-            }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
+
+                IconButton(onClick = {
+                    passwordVisible = !passwordVisible
+                }) {
+                    Icon(imageVector = image, contentDescription = "")
+                }
+            },
+
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
         Button(
             onClick = {
                 scope.launch {
@@ -142,8 +176,9 @@ fun SignUpScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 30.dp, end = 30.dp),
+                .padding(top = 20.dp, start = 0.dp, end = 0.dp),
             colors = ButtonDefaults.buttonColors(
+//                containerColor = Color.Black,
                 containerColor = Color.Black,
                 contentColor = Color.White
             ),
@@ -151,27 +186,33 @@ fun SignUpScreen(
         ) {
             Text(
                 text = "Sign Up",
+                fontFamily = FontFamily.Serif,
                 color = Color.White,
                 modifier = Modifier
                     .padding(7.dp)
             )
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             if (state.value?.isLoading == true) {
                 CircularProgressIndicator()
             }
         }
+
         Text(
             modifier = Modifier
                 .padding(15.dp)
                 .clickable {
 //                    navController.navigate(Screens.SignInScreen.route)
-                           navigator.navigate(SignInScreenDestination())
+                    navigator.navigate(SignInScreenDestination())
                 },
             text = "Already Have an account? sign In",
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            fontFamily = FontFamily.SansSerif
+            color = Color.White,
+            fontFamily = FontFamily.Serif
         )
         Text(
             modifier = Modifier
@@ -180,8 +221,9 @@ fun SignUpScreen(
                 ),
             text = "Or connect with",
             fontWeight = FontWeight.Medium,
-            color = Color.Gray
+            color = Color.White
         )
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -196,7 +238,9 @@ fun SignUpScreen(
                     tint = Color.Unspecified
                 )
             }
+
             Spacer(modifier = Modifier.width(20.dp))
+
             IconButton(onClick = {
 
             }) {

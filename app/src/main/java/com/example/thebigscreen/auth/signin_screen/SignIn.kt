@@ -3,6 +3,7 @@ package com.example.thebigscreen.auth.signin_screen
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,6 +58,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.thebigscreen.R
 import com.example.thebigscreen.destinations.HomeDestination
+import com.example.thebigscreen.ui.theme.AppPrimaryColor
 import com.example.thebigscreen.ui.theme.lightBlue
 import com.example.thebigscreen.util.Constants.ServerClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -101,6 +103,7 @@ fun SignInScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = AppPrimaryColor)   // changes here
             .padding(start = 30.dp, end = 30.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -109,9 +112,12 @@ fun SignInScreen(
             text = "Enter your credential's to register",
             fontWeight = FontWeight.Medium,
             fontSize = 15.sp,
-            color = Color.Gray,
-            fontFamily = FontFamily.SansSerif
+            color = Color.White,
+            fontFamily = FontFamily.Serif
         )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         TextField(
             value = email,
             onValueChange = {
@@ -119,7 +125,7 @@ fun SignInScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = lightBlue,
+//                containerColor = lightBlue,
                 cursorColor = Color.Black,
                 disabledLabelColor = lightBlue,
                 unfocusedIndicatorColor = Color.Transparent,
@@ -129,10 +135,16 @@ fun SignInScreen(
             singleLine = true,
             placeholder = {
                 Text(text = "Email")
-            }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        var passwordVisible by remember {
+            mutableStateOf(false)
+        }
 
         TextField(
             value = password,
@@ -141,7 +153,7 @@ fun SignInScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = lightBlue,
+//                containerColor = lightBlue,
                 cursorColor = Color.Black,
                 disabledLabelColor = lightBlue,
                 unfocusedIndicatorColor = Color.Transparent,
@@ -151,7 +163,20 @@ fun SignInScreen(
             singleLine = true,
             placeholder = {
                 Text(text = "Password")
-            }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
+
+                IconButton(onClick = {
+                    passwordVisible = !passwordVisible
+                }) {
+                    Icon(imageVector = image, contentDescription = "")
+                }
+            },
         )
 
         Button(
@@ -164,7 +189,7 @@ fun SignInScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 30.dp, end = 30.dp),
+                .padding(top = 20.dp, start = 0.dp, end = 0.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
                 contentColor = Color.White
@@ -174,6 +199,7 @@ fun SignInScreen(
             Text(
                 text = "Sign In",
                 color = Color.White,
+                fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(7.dp)
             )
         }
@@ -188,17 +214,21 @@ fun SignInScreen(
 
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(
             text = "New User? Sign Up ",
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            fontFamily = FontFamily.SansSerif
+            color = Color.White,
+            fontFamily = FontFamily.Serif
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "or connect with",
             fontWeight = FontWeight.Medium,
-            color = Color.Gray
+            color = Color.White
         )
 
         Row(
