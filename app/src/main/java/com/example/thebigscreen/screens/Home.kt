@@ -62,10 +62,10 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.thebigscreen.R
+import com.example.thebigscreen.destinations.MovieDetailsDestination
+import com.example.thebigscreen.destinations.ProfileDestination
+import com.example.thebigscreen.destinations.SearchScreenDestination
 import com.example.thebigscreen.model.Film
-import com.example.thebigscreen.screens.destinations.MovieDetailsDestination
-import com.example.thebigscreen.screens.destinations.ProfileDestination
-import com.example.thebigscreen.screens.destinations.SearchScreenDestination
 import com.example.thebigscreen.sharedComposables.LoopReverseLottieLoader
 import com.example.thebigscreen.ui.theme.AppOnPrimaryColor
 import com.example.thebigscreen.ui.theme.AppPrimaryColor

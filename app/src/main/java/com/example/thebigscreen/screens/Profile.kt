@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thebigscreen.R
-import com.example.thebigscreen.screens.destinations.WatchListDestination
+import com.example.thebigscreen.destinations.WatchListDestination
 import com.example.thebigscreen.sharedComposables.BackButton
 import com.example.thebigscreen.sharedComposables.CustomSwitch
 import com.example.thebigscreen.ui.theme.AppOnPrimaryColor

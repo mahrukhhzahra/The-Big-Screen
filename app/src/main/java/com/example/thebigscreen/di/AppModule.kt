@@ -5,12 +5,15 @@ import androidx.room.Room
 import com.example.thebigscreen.data.local.WatchListDatabase
 import com.example.thebigscreen.data.preferences.UserPreferences
 import com.example.thebigscreen.data.remote.ApiService
+import com.example.thebigscreen.data.repository.AuthRepository
+import com.example.thebigscreen.data.repository.AuthRepositoryImpl
 import com.example.thebigscreen.data.repository.FilmRepository
 import com.example.thebigscreen.data.repository.GenreRepository
 import com.example.thebigscreen.data.repository.ReviewsRepository
 import com.example.thebigscreen.data.repository.SearchRepository
 import com.example.thebigscreen.data.repository.WatchListRepository
 import com.example.thebigscreen.util.Constants.BASE_URL
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +28,23 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Provides
+    @Singleton
+    fun providesRepositoryImpl(firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth = firebaseAuth)
+    }
+
+
+
+
+
+
     @Singleton
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {

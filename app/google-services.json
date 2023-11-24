@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "842722815506",
+    "project_id": "the-big-screen-d8eb8",
+    "storage_bucket": "the-big-screen-d8eb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842722815506:android:b38ac30796765e3de672cb",
+        "android_client_info": {
+          "package_name": "com.example.thebigscreen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842722815506-kpk72j69euflf86vg8go05vfs012ga2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thebigscreen",
+            "certificate_hash": "01fc4ba36cb0ce10ee1e60be43dc355c7f05f813"
+          }
+        },
+        {
+          "client_id": "842722815506-clfhpqpvmnsekorukt0gtq51v2kedmg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0euhtYN_obn0BM3TMx_tgTgmg5X9Zs-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842722815506-clfhpqpvmnsekorukt0gtq51v2kedmg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

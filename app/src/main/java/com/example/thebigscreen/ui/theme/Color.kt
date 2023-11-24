@@ -16,3 +16,6 @@ val AppPrimaryColor = Color(0xFF180E36)
 val AppOnPrimaryColor = Color.White.copy(alpha = 0.78F)
 val ButtonColor = Color(0XFF423460)
 val SeeMore = Color(0xFF7E7E7E)
+
+val lightBlue = Color(0xffd8e6ff)
+val blue = Color(0xff76a9ff)

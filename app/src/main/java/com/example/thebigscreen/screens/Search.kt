@@ -28,8 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.thebigscreen.R
+import com.example.thebigscreen.destinations.MovieDetailsDestination
 import com.example.thebigscreen.model.Film
-import com.example.thebigscreen.screens.destinations.MovieDetailsDestination
 import com.example.thebigscreen.sharedComposables.BackButton
 import com.example.thebigscreen.sharedComposables.SearchBar
 import com.example.thebigscreen.sharedComposables.SearchResultItem

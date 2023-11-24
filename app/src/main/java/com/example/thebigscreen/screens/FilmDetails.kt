@@ -59,10 +59,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.thebigscreen.R
+import com.example.thebigscreen.destinations.ReviewsScreenDestination
+import com.example.thebigscreen.destinations.WatchProvidersScreenDestination
 import com.example.thebigscreen.model.Cast
 import com.example.thebigscreen.model.Genre
-import com.example.thebigscreen.screens.destinations.ReviewsScreenDestination
-import com.example.thebigscreen.screens.destinations.WatchProvidersScreenDestination
 import com.example.thebigscreen.sharedComposables.BackButton
 import com.example.thebigscreen.sharedComposables.ExpandableText
 import com.example.thebigscreen.sharedComposables.MovieGenreChip
