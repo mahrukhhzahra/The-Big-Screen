@@ -181,11 +181,22 @@ fun SignInScreen(
 
         Button(
             onClick = {
-                scope.launch {
-                    viewModel.loginUser(email, password)
-                    /* TODO I add logic here to redirect to HomeScreen after successful user login */
+
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    scope.launch {
+                        viewModel.loginUser(email, password)
+                        /* TODO I add logic here to redirect to HomeScreen after successful user login */
+                    }
                     navigator.navigate(HomeDestination())   // added
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Please enter valid email and password.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
+
             },
             modifier = Modifier
                 .fillMaxWidth()

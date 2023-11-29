@@ -121,10 +121,9 @@ fun SignUpScreen(
                 Text(text = "Email")
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-       )
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
-
 
 
         var passwordVisible by remember {
@@ -163,16 +162,27 @@ fun SignUpScreen(
                 }
             },
 
-        )
+            )
 
         Spacer(modifier = Modifier.height(16.dp))
 
 
         Button(
+
             onClick = {
-                scope.launch {
-                    viewModel.registerUser(email, password)
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+
+                    scope.launch {
+                        viewModel.registerUser(email, password)
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Please enter valid email and password.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -273,122 +283,111 @@ fun SignUpScreen(
     }
 
 
+    /* var name by remember {
+         mutableStateOf("")
+     }
+
+     Column(
+         modifier = Modifier
+             .fillMaxSize()
+             .padding(40.dp),
+         horizontalAlignment = Alignment.Start,
+         verticalArrangement = Arrangement.SpaceEvenly
+     ) {
+         IconButton(onClick = {
+             navigator.popBackStack()    // to get out from sign out screen if user presses back button
+         }) {
+             Icon(
+                 imageVector = Icons.Filled.ArrowBack,
+                 contentDescription = stringResource(id = R.string.arrow_back)
+             )
+         }
+
+         Text(
+             modifier = Modifier.width(250.dp),
+             text = stringResource(R.string.create_new_account),
+             fontSize = 40.sp,
+             fontWeight = FontWeight.Bold
+         )
+
+         TextField(
+             value = name,
+             onValueChange = {
+                 name = it
+             },
+             label = {
+                 Text(text = stringResource(R.string.full_name))
+             },
+             placeholder = {
+                 Text(text = stringResource(R.string.enter_your_name))
+             },
+             colors = TextFieldDefaults.textFieldColors(
+                 containerColor = Color.Transparent
+             )
+         )
 
 
+         var email by remember { mutableStateOf("") }
+         TextField(
+             value = email,
+             onValueChange = {
+                 email = it
+             },
+             label = {
+                 Text(text = stringResource(R.string.email_address))
+             },
+             placeholder = {
+                 Text(text = stringResource(R.string.sample_email))
+             },
+             colors = TextFieldDefaults.textFieldColors(
+                 containerColor = Color.Transparent
+             ),
+             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+         )
 
 
+         var pass by remember {
+             mutableStateOf("")
+         }
+         var passwordVisible by remember {
+             mutableStateOf(false)
+         }
 
 
+         TextField(
+             value = pass,
+             onValueChange = {
+                 pass = it
+             },
+             label = {
+                 Text(text = stringResource(R.string.create_password))
+             },
+             placeholder = {
+                 Text(text = stringResource(R.string.enter_your_password))
+             },
+             colors = TextFieldDefaults.textFieldColors(
+                 containerColor = Color.Transparent
+             ),
+             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+             trailingIcon = {
+                 val image = if (passwordVisible)
+                     Icons.Filled.Visibility
+                 else Icons.Filled.VisibilityOff
+
+                 IconButton(onClick = {
+                     passwordVisible = !passwordVisible
+                 }) {
+                     Icon(imageVector = image, contentDescription = "")
+                 }
+             },
+         )
 
 
-
-
-
-   /* var name by remember {
-        mutableStateOf("")
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(40.dp),
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-        IconButton(onClick = {
-            navigator.popBackStack()    // to get out from sign out screen if user presses back button
-        }) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = stringResource(id = R.string.arrow_back)
-            )
-        }
-
-        Text(
-            modifier = Modifier.width(250.dp),
-            text = stringResource(R.string.create_new_account),
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        TextField(
-            value = name,
-            onValueChange = {
-                name = it
-            },
-            label = {
-                Text(text = stringResource(R.string.full_name))
-            },
-            placeholder = {
-                Text(text = stringResource(R.string.enter_your_name))
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent
-            )
-        )
-
-
-        var email by remember { mutableStateOf("") }
-        TextField(
-            value = email,
-            onValueChange = {
-                email = it
-            },
-            label = {
-                Text(text = stringResource(R.string.email_address))
-            },
-            placeholder = {
-                Text(text = stringResource(R.string.sample_email))
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent
-            ),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        )
-
-
-        var pass by remember {
-            mutableStateOf("")
-        }
-        var passwordVisible by remember {
-            mutableStateOf(false)
-        }
-
-
-        TextField(
-            value = pass,
-            onValueChange = {
-                pass = it
-            },
-            label = {
-                Text(text = stringResource(R.string.create_password))
-            },
-            placeholder = {
-                Text(text = stringResource(R.string.enter_your_password))
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent
-            ),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                val image = if (passwordVisible)
-                    Icons.Filled.Visibility
-                else Icons.Filled.VisibilityOff
-
-                IconButton(onClick = {
-                    passwordVisible = !passwordVisible
-                }) {
-                    Icon(imageVector = image, contentDescription = "")
-                }
-            },
-        )
-
-
-        Button(
-            onClick = {
-                // to navigate to signin or home page after user signup
-                *//*TODO(): implement logic here if user already exists i.e logged in already*//*
+         Button(
+             onClick = {
+                 // to navigate to signin or home page after user signup
+                 *//*TODO(): implement logic here if user already exists i.e logged in already*//*
                       navigator.navigate(SignInScreenDestination())
             },
             modifier = Modifier
